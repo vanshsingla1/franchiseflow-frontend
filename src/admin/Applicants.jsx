@@ -54,6 +54,7 @@ const Applicants = () => {
      
       localStorage.removeItem("email"); 
       localStorage.removeItem("isAdmin");
+      localStorage.removeItem("token");
       navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
@@ -61,21 +62,43 @@ const Applicants = () => {
   };
 
   const fetchApplicants = async (url, type) => {
-    if (loading) return;
-    setLoading(true);
-    setViewType(type);
-    setSearchTerm("");
+  if (loading) return;
 
-    try {
-      let response = await axios.get(url);
-      setjsonApplications(Array.isArray(response.data) ? response.data : []);
-    } catch (error) {
-      console.error(`Error fetching ${type} applicants:`, error);
-      setjsonApplications([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  setViewType(type);
+  setSearchTerm("");
+
+  try {
+
+    const token = localStorage.getItem("token");
+
+    console.log("Token:", token);
+
+    let response = await axios.get(url,{
+      headers:{
+        authorization:`Bearer ${token}`
+      }
+    });
+
+    setjsonApplications(
+      Array.isArray(response.data)
+        ? response.data
+        : []
+    );
+
+  } catch (error) {
+
+    console.error(
+      `Error fetching ${type} applicants:`,
+      error
+    );
+
+    setjsonApplications([]);
+
+  } finally {
+    setLoading(false);
+  }
+};
 
   const getAllPendingApplicantDetails = () =>
     fetchApplicants("https://franchiseflow-backend.onrender.com/admin/getAllPendingApplicantsDetails", "pending");
