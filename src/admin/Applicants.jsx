@@ -42,7 +42,7 @@ const Applicants = () => {
 
     try {
       await axios.post(url, obj, {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
       });
     } catch (error) {
       console.error("Error updating franchise status:", error);
