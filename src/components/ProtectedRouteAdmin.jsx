@@ -1,15 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRouteAdmin = () => {
-  const email = localStorage.getItem("email");
-  
-  // Check if the user is logged in AND is the admin
-  if (email === "sunitasinglam11@gmail.com") {
+  const isAdmin = localStorage.getItem("isAdmin");
+  if (isAdmin === "true" || isAdmin === "1") {
     return <Outlet />;
-  } else {
-    // Redirect to login if not admin
-    return <Navigate to="/dashboard" />;
   }
+
+return <Navigate to="/dashboard" replace />;
 };
 
 export default ProtectedRouteAdmin;

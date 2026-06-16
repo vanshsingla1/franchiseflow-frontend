@@ -33,29 +33,26 @@ const Login = () => {
       setErrors({});
       // Handle successful login here
       // console.log('Logged in with:', { email, password });
-      let url = "https://franchiseflow-backend-production.up.railway.app/user/checklogin";
+      let url = "https://franchiseflow-backend.onrender.com/user/checklogin";
       let obj = { email: email,
         pwd : password
       };
        let resp = await axios.post(url, obj, {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         });
+        console.log(resp.data);
         if(resp.data.status==true)
         {
-          // alert(resp.data.message);
           localStorage.setItem("email",email);
-          // localStorage.removeItem("email");
-          // alert(localStorage.getItem("email"));
-          // alert(resp.data.token);
-          localStorage.setItem("token",resp.data.token);
-          if(email==="sunitasinglam11@gmail.com")
-          {
-            navigate("/admin")
+          localStorage.setItem("isAdmin", resp.data.isAdmin ? "true" : "false");
+          localStorage.setItem("token", resp.data.token); // Store the token in localStorage
+          console.log("isAdmin value:", resp.data.isAdmin);
+          console.log("type:", typeof resp.data.isAdmin);
+          if(resp.data.isAdmin) {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
           }
-          else{
-            navigate("/dashboard")
-          }
-          
         }
       else
       {

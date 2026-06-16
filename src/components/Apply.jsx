@@ -80,7 +80,7 @@ const Apply = () => {
     if (!validateForm()) return;
 
     try {
-      const url = "https://franchiseflow-backend-production.up.railway.app/user/SaveUserApplyDetails";
+      const url = "https://franchiseflow-backend.onrender.com/user/SaveUserApplyDetails";
       const resp = await axios.post(url, obj, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       });
