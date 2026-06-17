@@ -76,7 +76,7 @@ const Applicants = () => {
 
     let response = await axios.get(url,{
       headers:{
-        authorization:`Bearer ${token}`
+        Authorization:`Bearer ${token}`
       }
     });
 
